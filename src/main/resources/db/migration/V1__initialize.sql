@@ -27,3 +27,4 @@ insert into products (title, price) values
 ('chicken', 330),
 ('pork', 450),
 ('beef', 750);
+
