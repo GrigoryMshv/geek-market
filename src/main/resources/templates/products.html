@@ -39,6 +39,7 @@
                 <th>ID</th>
                 <th>Название</th>
                 <th>Цена</th>
+                <th>Действие</th>
             </tr>
             </thead>
             <tbody>
@@ -46,9 +47,36 @@
                 <td th:text="${p.id}"/>
                 <td th:text="${p.title}"/>
                 <td th:text="${p.price}"/>
+                <td>
+                    <a class="btn btn-success" th:href="@{'/products/edit/' + ${p.id}}">Редактировать</a>
+                </td>
             </tr>
             </tbody>
         </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+
+                <li class="page-item" th:classappend="${products.isFirst() ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{'/products?p=' + ${products.previousOrFirstPageable().getPageNumber() + 1} + ${filterDefinition}}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
+                    th:each="i : ${#numbers.sequence(1, products.getTotalPages())}">
+                    <a class="page-link" th:text="${i}" th:href="@{'/products?p=' + ${i} + ${filterDefinition}}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${products.isLast() ? 'disabled' : ''}">
+                    <a class="page-link" th:href="@{'/products?p=' + ${products.nextOrLastPageable().getPageNumber() + 1} + ${filterDefinition}}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </body>
 </html>
